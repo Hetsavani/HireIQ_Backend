@@ -100,7 +100,7 @@ Make sure all values are wrapped in double quotes (no single quotes).
       title,
       description,
       quizId,
-      createdBy: req.user.userId,
+      createdBy: req.user.id,
       questions: generatedQuestions.map((q, index) => ({
         questionId: index + 1,
         type: q.type,
@@ -140,6 +140,7 @@ Make sure all values are wrapped in double quotes (no single quotes).
 
 exports.joinQuiz = async (req, res, next) => {
   try {
+    console.log(req.params.quizId);
     const quiz = await Quiz.findOne({ quizId: req.params.quizId });
     if (!quiz) return res.status(404).json({ message: "Quiz not found" });
 
