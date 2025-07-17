@@ -21,7 +21,9 @@ const register = async (req, res, next) => {
       name,
       email,
       passwordHash: hashed,
-      role
+      role,
+      GeminiKey: role === "admin" ? req.body.GeminiKey : null,
+      profileImage: req.body.profileImage || null
     });
 
     res.status(201).json({ message: "Registered successfully" });

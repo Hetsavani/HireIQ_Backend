@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 // const authRoutes = require('./routes/auth.routes');
-const authRoutes = require('./Routes/auth.routes');
+const authRoutes = require('./routes/auth.routes');
 const errorHandler = require('./middlewares/errorHandler');
+const quizRoutes = require('./routes/quiz.routes');
 
 // Load env vars
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/quiz', quizRoutes);
 
 // Error Handler
 app.use(errorHandler);
