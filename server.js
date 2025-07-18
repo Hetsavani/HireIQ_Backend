@@ -6,6 +6,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth.routes');
 const errorHandler = require('./middlewares/errorHandler');
 const quizRoutes = require('./routes/quiz.routes');
+const userRoutes = require('./routes/user.routes');
 
 // Load env vars
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/quiz', quizRoutes);
+app.use('/api/user', userRoutes);
 
 // Error Handler
 app.use(errorHandler);
