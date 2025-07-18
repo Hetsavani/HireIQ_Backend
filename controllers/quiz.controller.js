@@ -75,9 +75,9 @@ Make sure all values are wrapped in double quotes (no single quotes).
 
     let generatedQuestions;
     try {
-      const jsonLike = text.match(/\[.*\]/s)?.[0];
-      const cleaned = jsonLike.replace(/(\w+):/g, '"$1":').replace(/'/g, '"');
-      generatedQuestions = JSON.parse(cleaned);
+      // const jsonLike = text.match(/\[.*\]/s)?.[0];
+      // const cleaned = jsonLike.replace(/(\w+):/g, '"$1":').replace(/'/g, '"');
+      generatedQuestions = JSON.parse(text);
     } catch (err) {
       return res.status(500).json({
         message: "Failed to parse Gemini response",
