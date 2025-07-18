@@ -9,7 +9,7 @@ const responseSchema = new mongoose.Schema({
 
 const submissionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  quizId: { type: mongoose.Schema.Types.ObjectId, ref: 'Quiz', required: true },
+  quizId: { type: String, required: true },
   responses: [responseSchema],
   score: { type: Number, required: true },
   totalQuestions: { type: Number, required: true },

@@ -1,6 +1,7 @@
 // models/Quiz.js
 
 const mongoose = require('mongoose');
+const {questionSchema} = require('./Question');
 
 // const quizSchema = new mongoose.Schema({
 //     title: String,
@@ -25,22 +26,22 @@ const mongoose = require('mongoose');
 //         default: Date.now
 //     }
 // });
-const questionSchema = new mongoose.Schema({
-  questionId: Number,
-  type: {
-    type: String,
-    enum: ['mcq', 'code', 'short'],
-    required: true
-  },
-  questionText: String,
-  options: [String], // optional for non-mcq
-  correctAnswer: String,
-  topic: String,
-  difficulty: {
-    type: String,
-    enum: ['easy', 'medium', 'hard']
-  }
-});
+// const questionSchema = new mongoose.Schema({
+//   questionId: Number,
+//   type: {
+//     type: String,
+//     enum: ['mcq', 'code', 'short'],
+//     required: true
+//   },
+//   questionText: String,
+//   options: [String], // optional for non-mcq
+//   correctAnswer: String,
+//   topic: String,
+//   difficulty: {
+//     type: String,
+//     enum: ['easy', 'medium', 'hard']
+//   }
+// });
 
 const quizSchema = new mongoose.Schema({
   title: String,
