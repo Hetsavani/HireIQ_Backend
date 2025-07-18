@@ -36,9 +36,9 @@ const register = async (req, res, next) => {
 };
 const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email, role });
     if (!user) return res.status(401).json({ message: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
@@ -103,11 +103,11 @@ const sendOTP = async (req, res, next) => {
 
 const verifyOTP = async (req, res, next) => {
   const { email, otp } = req.body;
-  console.log(otp)
-  console.log(email)
+  console.log(otp);
+  console.log(email);
   try {
     const user = await User.findOne({ email });
-    console.log(user)
+    console.log(user);
     if (!user || String(user.otpCode) !== String(otp)) {
       return res.status(400).json({ error: "Invalid OTP" });
     }
@@ -127,11 +127,11 @@ const resetPassword = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (!user || user.otpCode !== otp) {
-      return res.status(400).json({ error: 'Invalid OTP' });
+      return res.status(400).json({ error: "Invalid OTP" });
     }
 
     if (new Date() > user.otpExpiresAt) {
-      return res.status(400).json({ error: 'OTP expired' });
+      return res.status(400).json({ error: "OTP expired" });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -140,7 +140,7 @@ const resetPassword = async (req, res, next) => {
     user.otpExpiresAt = null;
     await user.save();
 
-    res.status(200).json({ message: 'Password reset successful' });
+    res.status(200).json({ message: "Password reset successful" });
   } catch (err) {
     next(err);
   }
