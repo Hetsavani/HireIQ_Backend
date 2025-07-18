@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth.routes');
 const errorHandler = require('./middlewares/errorHandler');
 const quizRoutes = require('./routes/quiz.routes');
 const userRoutes = require('./routes/user.routes');
+const submissionRoutes = require('./routes/submission.routes');
 
 // Load env vars
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/quiz', quizRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/submissions', submissionRoutes);
 
 // Error Handler
 app.use(errorHandler);
