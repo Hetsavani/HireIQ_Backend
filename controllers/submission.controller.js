@@ -37,6 +37,7 @@ exports.createSubmission = async (req, res) => {
 exports.getSubmissionsByUser = async (req, res) => {
   try {
     const { userId } = req.params;
+    console.log(userId);
     const submissions = await Submission.find({ userId }).populate('quizId').sort({ submittedAt: -1 });
     res.status(200).json(submissions);
   } catch (error) {
