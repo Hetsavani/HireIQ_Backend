@@ -7,12 +7,22 @@ const User = require("../models/User");
 
 exports.createQuiz = async (req, res, next) => {
   try {
+    // const {
+    //   title,
+    //   description,
+    //   topic,
+    //   difficulty,
+    //   numberOfQuestions,
+    //   timeLimit,
+    //   requiredPercentage,
+    // } = req.body;
     const {
+      questions,
       title,
       description,
-      topic,
+      image,
       difficulty,
-      numberOfQuestions,
+      category,
       timeLimit,
       requiredPercentage,
     } = req.body;
@@ -102,6 +112,9 @@ Make sure all values are wrapped in double quotes (no single quotes).
       description,
       quizId,
       createdBy: req.user.id,
+      image,
+      difficulty,
+      category,
       questions: generatedQuestions.map((q, index) => ({
         questionId: index + 1,
         type: q.type,
@@ -114,6 +127,25 @@ Make sure all values are wrapped in double quotes (no single quotes).
       timeLimit,
       requiredPercentage,
     });
+
+    // =====================================================================
+    // const newQuiz = new Quiz({
+    //   title,
+    //   description,
+    //   quizId,
+    //   createdBy: req.user.id,
+    //   questions: generatedQuestions.map((q, index) => ({
+    //     questionId: index + 1,
+    //     type: q.type,
+    //     questionText: q.questionText,
+    //     options: q.options,
+    //     correctAnswer: q.correctAnswer,
+    //     topic: q.topic,
+    //     difficulty: q.difficulty,
+    //   })),
+    //   timeLimit,
+    //   requiredPercentage,
+    // });
     // const newQuiz = new Quiz({
     //   title,
     //   description,
@@ -158,7 +190,9 @@ exports.getQuizzesByAdmin = async (req, res) => {
     const quizzes = await Quiz.find({ createdBy: _id }).sort({ createdAt: -1 });
 
     if (!quizzes || quizzes.length === 0) {
-      return res.status(404).json({ message: "No quizzes found for this admin." });
+      return res
+        .status(404)
+        .json({ message: "No quizzes found for this admin." });
     }
 
     res.status(200).json(quizzes);
@@ -173,8 +207,8 @@ exports.getAllQuizzes = async (req, res) => {
     const quizzes = await Quiz.find().sort({ createdAt: -1 }).populate('createdBy', 'name email');
     res.status(200).json(quizzes);
   } catch (err) {
-    console.error('Error fetching quizzes:', err);
-    res.status(500).json({ error: 'Failed to fetch quizzes' });
+    console.error("Error fetching quizzes:", err);
+    res.status(500).json({ error: "Failed to fetch quizzes" });
   }
 };
 
@@ -201,9 +235,8 @@ exports.updateQuizQuestions = async (req, res) => {
 
     res.status(200).json({
       message: "Quiz questions updated successfully",
-      quiz: updatedQuiz
+      quiz: updatedQuiz,
     });
-
   } catch (error) {
     console.error("Update quiz error:", error);
     res.status(500).json({ error: "Failed to update quiz questions" });
