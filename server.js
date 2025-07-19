@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 // const authRoutes = require('./routes/auth.routes');
 const authRoutes = require('./routes/auth.routes');
-const errorHandler = require('./middlewares/errorHandler');
+// const errorHandler = require('./middlewares/errorHandler');
 const quizRoutes = require('./routes/quiz.routes');
 const userRoutes = require('./routes/user.routes');
 const submissionRoutes = require('./routes/submission.routes');
@@ -28,7 +28,7 @@ app.use('/api/submissions', submissionRoutes);
 app.use('/api/interviews', interviewRoutes);
 
 // Error Handler
-app.use(errorHandler);
+// app.use(errorHandler);
 
 // DB Connection
 mongoose.connect(process.env.MONGO_URI, {
