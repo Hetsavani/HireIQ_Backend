@@ -37,8 +37,9 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password, role } = req.body;
-
+    console.log(email, password, role);
     const user = await User.findOne({ email, role });
+    console.log(user);
     if (!user) return res.status(401).json({ message: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
@@ -50,7 +51,6 @@ const login = async (req, res, next) => {
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
-
     res.json({
       token,
       user: {
