@@ -28,7 +28,7 @@ app.use('/api/submissions', submissionRoutes);
 app.use('/api/interviews', interviewRoutes);
 
 // Error Handler
-app.use(errorHandler);
+// app.use(errorHandler);
 
 // DB Connection
 mongoose.connect(process.env.MONGO_URI, {
