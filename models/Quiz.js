@@ -1,7 +1,7 @@
 // models/Quiz.js
 
-const mongoose = require('mongoose');
-const {questionSchema} = require('./Question');
+const mongoose = require("mongoose");
+const { questionSchema } = require("./Question");
 
 // const quizSchema = new mongoose.Schema({
 //     title: String,
@@ -47,14 +47,27 @@ const quizSchema = new mongoose.Schema({
   title: String,
   quizId: String,
   description: String,
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   questions: [questionSchema], // ✅ Fix here
   timeLimit: Number,
   requiredPercentage: Number,
+  image: { type: String }, // ✅ New field
+  difficulty: { type: String, enum: ["easy", "medium", "hard"] }, // ✅ New field
+  category: { type: String }, // ✅ New field
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model('Quiz', quizSchema);
+// const quizSchema = new mongoose.Schema({
+//   quizId: { type: String, required: true, unique: true },
+//   title: { type: String, required: true },
+//   description: String,
+//   image: { type: String }, // ✅ New field
+//   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+//   questions: [questionSchema],
+//   timeLimit: Number, // in minutes
+//   requiredPercentage: Number
+// }, { timestamps: true });
+// module.exports = mongoose.model('Quiz', quizSchema);
