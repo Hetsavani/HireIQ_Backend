@@ -170,7 +170,7 @@ exports.getQuizzesByAdmin = async (req, res) => {
 
 exports.getAllQuizzes = async (req, res) => {
   try {
-    const quizzes = await Quiz.find().sort({ createdAt: -1 });
+    const quizzes = await Quiz.find().sort({ createdAt: -1 }).populate('createdBy', 'name email');
     res.status(200).json(quizzes);
   } catch (err) {
     console.error('Error fetching quizzes:', err);
