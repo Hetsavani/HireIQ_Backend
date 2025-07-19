@@ -167,3 +167,13 @@ exports.getQuizzesByAdmin = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+exports.getAllQuizzes = async (req, res) => {
+  try {
+    const quizzes = await Quiz.find().sort({ createdAt: -1 });
+    res.status(200).json(quizzes);
+  } catch (err) {
+    console.error('Error fetching quizzes:', err);
+    res.status(500).json({ error: 'Failed to fetch quizzes' });
+  }
+};
