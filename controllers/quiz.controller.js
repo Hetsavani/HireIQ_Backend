@@ -21,13 +21,14 @@ exports.createQuiz = async (req, res, next) => {
 
     // Step 1: Get Gemini API key from admin user
     const user = await User.findById(req.user.id);
-    if (!user || !user.GeminiKey) {
+    console.log("Admin User:", user);
+    if (!user || !user.geminiKey) {
       return res
         .status(400)
         .json({ message: "Admin Gemini API key not found" });
     }
 
-    const genAI = new GoogleGenerativeAI(user.GeminiKey);
+    const genAI = new GoogleGenerativeAI(user.geminiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     //     const prompt = `
@@ -147,5 +148,22 @@ exports.joinQuiz = async (req, res, next) => {
     res.status(200).json({ quiz });
   } catch (err) {
     next(err);
+  }
+};
+
+exports.getQuizzesByAdmin = async (req, res) => {
+  try {
+    const { _id } = req.user;
+
+    const quizzes = await Quiz.find({ createdBy: _id }).sort({ createdAt: -1 });
+
+    if (!quizzes || quizzes.length === 0) {
+      return res.status(404).json({ message: "No quizzes found for this admin." });
+    }
+
+    res.status(200).json(quizzes);
+  } catch (error) {
+    console.error("Error fetching quizzes by admin:", error);
+    res.status(500).json({ error: "Server error" });
   }
 };

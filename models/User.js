@@ -1,36 +1,50 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    trim: true
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    lowercase: true
+  },
+  college:{
+    type: String,
   },
   passwordHash: {
     type: String,
-    required: true,
+    required: true
   },
   role: {
     type: String,
-    enum: ["admin", "student"],
-    required: true,
+    enum: ['admin', 'candidate'],
+    required: true
   },
-  GeminiKey: String,
-  profileImage: String,
-  GeminiKey: {
-    type: String, // Only required for admins
-    default: null,
+  geminiKey: {
+    type: String
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  imageUrl: {
+    type: String,
+    default: '' // Default empty if not uploaded
   },
-  otpCode: String,
-  otpExpiresAt: Date,
-});
+  resumeUrl: {
+    type: String,
+    default: '' // Default empty if not uploaded
+  },
+  about: {
+    type: String,
+    default: '' // Bio/summary about the user
+  },
+  otpCode: {
+    type: String
+  },
+  otpExpiry: {
+    type: Date
+  }
+}, { timestamps: true });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

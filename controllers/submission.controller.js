@@ -1,3 +1,4 @@
+const Quiz = require("../models/Quiz");
 const Submission = require("../models/Submission");
 const User = require("../models/User");
 
@@ -149,5 +150,40 @@ exports.getLeaderboardByQuiz = async (req, res) => {
   } catch (error) {
     console.error("Leaderboard error:", error);
     res.status(500).json({ error: "Failed to fetch leaderboard" });
+  }
+};
+
+exports.getPreviousQuizzesByUser = async (req, res) => {
+  try {
+    const userId  = req.user.id;
+    console.log("=======================================================");
+    console.log(req.user)
+
+    console.log("Fetching previous quizzes for user:", userId);
+
+    // Step 1: Get all submissions by the user
+    const submissions = await Submission.find({ userId }).sort({ submittedAt: -1 });
+
+    // Step 2: Fetch quiz details manually
+    const result = await Promise.all(
+      submissions.map(async (submission) => {
+        const quiz = await Quiz.findOne({ quizId: submission.quizId });
+        return {
+          quizId: quiz?.quizId || submission.quizId,
+          title: quiz?.title || 'Unknown',
+          description: quiz?.description || '',
+          score: submission.score,
+          percentage: submission.percentage,
+          totalQuestions: submission.totalQuestions,
+          submittedAt: submission.submittedAt,
+          eligibility: submission.eligibility,
+        };
+      })
+    );
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error fetching candidate's quizzes:", error);
+    res.status(500).json({ error: "Failed to fetch quizzes" });
   }
 };
