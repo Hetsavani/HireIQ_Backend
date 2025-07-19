@@ -10,7 +10,7 @@ const register = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
 
-    if (!["admin", "student"].includes(role)) {
+    if (!["admin", "candidate"].includes(role)) {
       return res.status(400).json({ message: "Invalid role" });
     }
 
