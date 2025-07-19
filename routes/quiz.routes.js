@@ -9,4 +9,5 @@ router.post('/create', verifyToken, createQuiz);
 router.get('/join/:quizId', verifyToken, joinQuiz);
 router.get('/quizzes', verifyToken, getAllQuizzes);
 
+
 module.exports = router;
