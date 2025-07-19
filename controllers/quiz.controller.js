@@ -177,3 +177,35 @@ exports.getAllQuizzes = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch quizzes' });
   }
 };
+
+exports.updateQuizQuestions = async (req, res) => {
+  try {
+    const { quizId } = req.params;
+    const { questions } = req.body;
+
+    if (!Array.isArray(questions)) {
+      return res.status(400).json({ error: "Questions must be an array" });
+    }
+
+    // Validate each question object (optional, based on your schema rules)
+
+    const updatedQuiz = await Quiz.findOneAndUpdate(
+      { quizId: quizId },
+      { $set: { questions } },
+      { new: true }
+    );
+
+    if (!updatedQuiz) {
+      return res.status(404).json({ error: "Quiz not found" });
+    }
+
+    res.status(200).json({
+      message: "Quiz questions updated successfully",
+      quiz: updatedQuiz
+    });
+
+  } catch (error) {
+    console.error("Update quiz error:", error);
+    res.status(500).json({ error: "Failed to update quiz questions" });
+  }
+};
