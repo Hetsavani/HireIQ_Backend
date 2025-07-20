@@ -24,6 +24,8 @@ exports.createQuiz = async (req, res, next) => {
       difficulty,
       category,
       timeLimit,
+      numberOfQuestions,
+      topic,
       requiredPercentage,
     } = req.body;
 

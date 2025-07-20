@@ -15,6 +15,7 @@ exports.createSubmission = async (req, res) => {
       submittedAt,
       eligibility,
     } = req.body;
+    
     console.log("======================================================");
     console.log(req.body);
     const newSubmission = new Submission({
