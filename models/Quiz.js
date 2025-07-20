@@ -70,4 +70,4 @@ const quizSchema = new mongoose.Schema({
 //   timeLimit: Number, // in minutes
 //   requiredPercentage: Number
 // }, { timestamps: true });
-// module.exports = mongoose.model('Quiz', quizSchema);
+module.exports = mongoose.model('Quiz', quizSchema);
