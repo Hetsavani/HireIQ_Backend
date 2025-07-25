@@ -125,6 +125,7 @@ exports.getLeaderboardByQuiz = async (req, res) => {
           console.log(user);
           return {
             responses:submission.responses,
+            submissionId: submission._id,
             score:submission.score,
             totalQuestions:submission.totalQuestions,
             percentage:submission.percentage,
